@@ -4,8 +4,14 @@ function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-function ranking(victory, defeat) {
+function ranking(victory, defeat, match) {
   let rank = victory - defeat
+  let victoryValue = victory
+  let defeatValue = defeat
+
+  console.log('match: ' + match)
+  console.log('Total Number of Wins: ' + victoryValue)
+  console.log('Total Number of Defeats: ' + defeatValue)
 
   switch (true) {
     case rank <= 10:
@@ -30,4 +36,30 @@ function ranking(victory, defeat) {
       console.log(msg + ' Immortal')
   }
 }
-ranking(random(1,150),random(1,150))
+
+let victories = 0
+let defeats = 0
+let rankingHistory = []
+
+for (let i = 0; i < 200; i++) {
+  let result = Math.random() < 0.70 ? 'victory' : 'defeat'
+  
+  if (result === 'victory') {
+    victories++
+  } else {
+    defeats++
+  }
+  
+  ranking(victories, defeats, i + 1)
+  
+  rankingHistory.push({
+    partida: i + 1,
+    resultado: result,
+    vitorias: victories,
+    derrotas: defeats
+  })
+  
+  console.log('------------------------')
+}
+let winPercentage = (victories / (victories + defeats)) * 100
+console.log('Win Percentage: ' + winPercentage.toFixed(2) + '%')
